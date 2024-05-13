@@ -18,33 +18,30 @@
 
 .loginform{
     position: relative;
-    height: 70vh;
-    width: 22vw;
-    min-width: 250px;
-    
+    height: 560px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     top: 20vh;
+    box-sizing: border-box;
 }
 
 .ellipse{
     position: relative;
     z-index: 1;
-    height: 11vh;
-    min-height: 75px;
+    height: 117px;
     width: 100%;
     background-color: #F36F41;
-    border-radius: 55px;
+    border-radius: 54px;
 }
 
 .login{
-    height: 65vh;
-    min-height: 300px;
+    height: 560px;
     width: 100%;
     position: absolute;
     z-index: 2;
     top: 6px;
-    border-radius: 40px;
+    border-radius: 47px;
     background-color: #181818;
     display: flex;
     flex-direction: column;
@@ -56,11 +53,9 @@
 .logo{
     border-radius: 50%;
     height: 12vh;
-    min-height: 50px;
-    min-width: 50px;
     width: 12vh;
     background-color: #333333;
-    padding: 2vh;
+    padding: 10px;
     z-index: 2;    
 }
 
@@ -82,8 +77,6 @@
     position: relative;
     width: 18vw;
     height: 10vh;
-    min-height: 40px;
-    min-width: 200px;
 }
 
 .username .label{
@@ -96,7 +89,6 @@
     align-items: center;
     height: 2vh;
     width:4.5vw;
-    min-width: 75px;
     background-color: #181818;
     color: #C2C2C2;
     font-size: 12px;
@@ -124,8 +116,6 @@
     position: relative;
     width: 18vw;
     height: 10vh;
-    min-height: 40px;
-    min-width: 200px;
 }
 
 .password .label{
@@ -138,7 +128,6 @@
     align-items: center;
     height: 2vh;
     width:4.5vw;
-    min-width: 75px;
     background-color: #181818;
     color: #C2C2C2;
     font-size: 12px;
@@ -180,12 +169,8 @@
     height: 6vh;
     font-size: medium;
     cursor: pointer;
-    min-height: 40px;
-    min-width: 200px;
 }
   
-
-
 .banner{
     width: 55%;
     height: 100%;
@@ -194,3 +179,78 @@
     opacity: 1;
 }
   
+
+/* Adjustments for small screens */
+@media screen and (max-width: 768px) {
+    .container {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .loginspace {
+        width: 100%;
+        
+    }
+    .loginform{
+        position: relative;
+        height: 560px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        top: 20vh;
+        box-sizing: border-box;
+    }
+    
+    .ellipse{
+        position: relative;
+        z-index: 1;
+        height: 117px;
+        width: 100%;
+        background-color: #F36F41;
+        border-radius: 54px;
+    }
+    
+    .login{
+        height: 560px;
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+        top: 6px;
+        border-radius: 47px;
+        background-color: #181818;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4vh;
+    }
+    
+    .logo {
+        height: 10vh;
+        width: 10vh;
+    }
+
+    .username, .password {
+        width: 80%;
+    }
+
+    .username .label, .password .label {
+        width: 20%;
+    }
+
+    .userinput, .passwordinput {
+        width: 100%;
+    }
+
+    .button {
+        width: 80%;
+    }
+
+    .banner {
+        display: none;
+    }
+}

@@ -7,7 +7,7 @@ import { FiEyeOff,FiEye } from "react-icons/fi";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState();
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState('');
 
   const togglePasswordVisibility = () => {
