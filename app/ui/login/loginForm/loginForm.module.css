@@ -1,0 +1,182 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+}
+
+.loginspace{    
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.loginform{
+    position: relative;
+    height: 70vh;
+    width: 22vw;
+    display: flex;
+    flex-direction: column;
+    top: 20vh;
+}
+
+.ellipse{
+    position: relative;
+    z-index: 1;
+    height: 11vh;
+    width: 100%;
+    background-color: #F36F41;
+    border-radius: 55px;
+}
+
+.login{
+    height: 65vh;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    top: 6px;
+    border-radius: 40px;
+    background-color: #181818;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4vh;
+}
+
+.logo{
+    border-radius: 50%;
+    height: 12vh;
+    width: 12vh;
+    background-color: #333333;
+    padding: 10px;
+    z-index: 2;    
+}
+
+.image{
+    height: 100%;
+    width: 100%;
+    background: url('../../../../public/icon.png') no-repeat;
+    background-size: contain;
+    z-index: 2;
+}
+
+.heading{
+    color: white;
+    z-index: 2;
+    user-select: none;
+}
+
+.username{
+    position: relative;
+    width: 18vw;
+    height: 10vh;
+}
+
+.username .label{
+    left: 1vw;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 2vh;
+    width:4.5vw;
+    background-color: #181818;
+    color: #C2C2C2;
+    font-size: 12px;
+    user-select: none;
+}
+
+.userinput{
+    top: 8px;
+    padding: 4px;
+    position: relative;
+    background-color: transparent;
+    border-radius: 12px;
+    border: 1px solid #707070;
+    width: 100%;
+    height: 7vh;
+    z-index: 1;
+    color: white;
+    font-size: medium;
+}
+.userinput:focus{
+    outline: none;
+}
+
+.password{
+    position: relative;
+    width: 18vw;
+    height: 10vh;
+}
+
+.password .label{
+    left: 1vw;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 2vh;
+    width:4.5vw;
+    background-color: #181818;
+    color: #C2C2C2;
+    font-size: 12px;
+    user-select: none;
+}
+.passwordinput{
+    top: 8px;
+    padding: 4px;
+    position: relative;
+    background-color: transparent;
+    border-radius: 12px;
+    border: 1px solid #707070;
+    width: 100%;
+    height: 7vh;
+    z-index: 1;
+    color: white;
+    font-size: medium;
+}
+.passwordinput:focus{
+    outline: none;
+}
+
+.eye{
+    background-color: #181818;
+    position: absolute;
+    top: 3vh;
+    right: 1.5vh;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 1;
+}
+
+.login button{
+    background-color: #F36F41;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    width: 18vw;
+    height: 6vh;
+    font-size: medium;
+    cursor: pointer;
+}
+  
+
+
+.banner{
+    width: 55%;
+    height: 100%;
+    background: url('../../../../public/banner.png') no-repeat;
+    background-size: cover;
+    opacity: 1;
+}
+  
