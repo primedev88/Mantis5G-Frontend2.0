@@ -1,26 +1,42 @@
 "use client";
 
+import {authenticate} from "@/app/lib/actions"
 import { useState } from "react";
 import styles from "./loginForm.module.css";
-import { useFormState } from "react-dom"
 import { FiEyeOff,FiEye } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
-  const [state, formAction] = useFormState();
-  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [showPassword, setShowPassword] = useState(true);
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   }
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const result = await authenticate({ username, password });
+
+    if (result === '/dashboard') {
+      router.push(result);
+    } else {
+      setErrorMessage(result);
+    }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.loginspace}>
-        <form action={formAction}>
+        <form onSubmit={handleSubmit}>
           <div className={styles.loginform}>
             <div className={styles.ellipse}></div>
             <div className={styles.login}>
@@ -32,13 +48,21 @@ const LoginForm = () => {
                 <div className={styles.label}>
                   <div>Username</div>
                 </div>
-                <input className={styles.userinput} type="text" placeholder="" name="username" />
+                <input 
+                  autoComplete="off" 
+                  className={styles.userinput} type="text" 
+                  placeholder="" 
+                  name="username"
+                  value={username}
+                  onChange={handleUsernameChange} 
+                />
               </div>
               <div className={styles.password}>
                 <div className={styles.label}>
                   <div>Password</div>
                 </div>
                 <input
+                  autoComplete="off"
                   className={styles.passwordinput}
                   type={showPassword ? "password" : "text"}
                   placeholder=""
@@ -54,8 +78,9 @@ const LoginForm = () => {
                   )}
                 </div>
               </div>
-              <button>Login</button>
-              {state && state}
+              {/* Error message display */}
+              {errorMessage && <div className={styles.error}>{errorMessage} !</div>}
+              <button type="submit">Login</button>
             </div>
           </div>
         </form>
