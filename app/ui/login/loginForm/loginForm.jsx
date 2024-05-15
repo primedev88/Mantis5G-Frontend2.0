@@ -26,8 +26,9 @@ const LoginForm = () => {
     event.preventDefault();
     const result = await authenticate({ username, password });
 
-    if (result === '/dashboard') {
-      router.push(result);
+    if (result.redirect === '/dashboard') {
+      router.push(result.redirect);
+      document.cookie = result.cookieSerialized;
     } else {
       setErrorMessage(result);
     }
