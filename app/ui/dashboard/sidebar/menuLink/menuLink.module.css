@@ -1,0 +1,34 @@
+.container {
+    padding:11px 20px;
+    display: flex;
+    align-items: center;
+    margin: 15px 0px;
+    border-radius: 6px;
+    background-color: #181818;
+    color: #7D7D7D;
+    justify-content: space-between;
+  }
+
+  .group{
+    display: flex;
+    gap: 10px;
+  }
+
+  .title{
+    font-size: 13px;
+  }
+  
+  .active {
+    background-color: #F36F41;
+    color: white;
+  }
+
+  .arrow{
+    color:#181818
+  }
+
+  .activeArrow{
+    color: white;
+  }
+
+  
