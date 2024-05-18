@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useRouter } from 'next/navigation';
 import styles from "./loginForm.module.css";
 import { FiEyeOff,FiEye } from "react-icons/fi";
@@ -13,6 +13,7 @@ const LoginForm = () => {
   }
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error,setError] = useState('');
   const router = useRouter();
 
   const handleLogin = (e) => {
@@ -25,7 +26,7 @@ const LoginForm = () => {
       sessionStorage.setItem('isLoggedIn', 'true');
       router.push('/dashboard');
     } else {
-      alert('Invalid credentials');
+      setError("Invalid Credentials !");
     }
   };
  
@@ -72,7 +73,7 @@ const LoginForm = () => {
                   )}
                 </div>
               </div>
-              
+              <div className={styles.error}>{error}</div>
               <button >Login</button>
             </div>
           </div>
