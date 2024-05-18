@@ -1,15 +1,15 @@
 "use client"
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import styles from "@/app/ui/login/login.module.css"
+import LoginForm from "./ui/login/loginForm/loginForm"
+import isSignedIn from "@/app/lib/actions2";
 
-const Home = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push('/login');
-  }, []);
-  return null;
+const LoginPage = () => {
+  return (
+    <div className={styles.container}>
+        <LoginForm/>
+    </div>
+  )
 }
 
-export default Home
+export default isSignedIn(LoginPage);

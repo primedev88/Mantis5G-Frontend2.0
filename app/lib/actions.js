@@ -1,28 +1,20 @@
-"use server";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-import { serialize } from 'cookie';
+const withAuth = (WrappedComponent) =>{
+  return (props) => {
+    const router = useRouter();
 
-export const authenticate = async (formData) => {
-  const { username, password } = formData;
-  
-  // Hardcoded credentials
-  const hardcodedUsername = 'user';
-  const hardcodedPassword = 'password';
+    useEffect(() => {
+      const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+      if (!isLoggedIn) {
+        router.push('/');
+      }
+    }, [router]);
 
-  if (username === hardcodedUsername && password === hardcodedPassword) {
-    
-    const token = 'login@123'; 
-    const cookieSerialized = serialize('token', token, {
-      httpOnly: true,
-    });
-    return { redirect: '/dashboard', cookieSerialized };
-  } else {
- 
-    return 'Invalid username or password';
-  }
+    return <WrappedComponent {...props} />;
+  };
 };
 
-export const isAuthenticated = (cookies) => {
-  const token = cookies && cookies.token;
-  return !!token;
-};
+export default withAuth;
+
