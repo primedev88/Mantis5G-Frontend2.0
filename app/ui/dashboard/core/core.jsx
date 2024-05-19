@@ -3,7 +3,9 @@ import styles from './core.module.css'
 
 const Core = () => {
   return (
-    <div>Core</div>
+    <div className={styles.container}>
+      Core
+    </div>
   )
 }
 

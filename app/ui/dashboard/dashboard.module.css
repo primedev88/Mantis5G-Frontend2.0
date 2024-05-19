@@ -10,5 +10,42 @@
 
 .content {
     flex: 5;
-    padding: 20px;
+}
+
+.dashboard{
+    height: 92vh;
+    width: 100%;
+    background-color: #171717;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress{
+    height: 10%;
+    width: 100%;
+    padding: 10px 20px;
+    
+}
+
+.bar{
+    height: 100%;
+    width: 100%;
+    background-color: #2A2A2A;
+    border-radius: 12px;
+    padding: 5px 20px;
+    color: white;
+}
+
+.info{
+    height: 90%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.core,.ran,.ue,.packet{
+    padding: 10px 20px;
 }

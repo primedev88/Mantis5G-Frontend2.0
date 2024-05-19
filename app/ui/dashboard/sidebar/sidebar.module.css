@@ -8,7 +8,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10vh;
+    height: 8vh;
+    min-height: 50px;
     width: 100%;
 }
 
@@ -20,7 +21,7 @@
 
 .ulList{
     width:100%;
-    padding: 0px 15px;
+    padding: 20px 15px;
 }
 
 .list{
@@ -35,11 +36,12 @@
     background-color: #181818;
     color: #7D7D7D;
     height: 5vh;
-    min-height: 5vh;
+    min-height: 40px;
     border-radius: 6px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    cursor: pointer;
 }
 
 .resicon{
@@ -59,7 +61,7 @@
 }
 
 .quickStats{
-    margin-top: 3vh;
+    
     width: 100%;
     padding:10px 20px;
     display: flex;
@@ -76,6 +78,7 @@
 .device{
     
     height: 6vh;
+    min-height: 40px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -116,19 +119,20 @@
 }
 
 .logout{
-    margin-top: 5vh;
+    margin-top: 3vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0px 20px;
     height: 6vh;
-    min-height: 6vh;
+    min-height: 40px;
     width: 90%;
     border-radius: 6px;
     color: #fc3503;
     background-color: #181818;
     outline: none;
     border: none;
+    cursor: pointer;
 }
 
 .symbol{

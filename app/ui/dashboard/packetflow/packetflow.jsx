@@ -3,7 +3,7 @@ import styles from './packetflow.module.css'
 
 const Packetflow = () => {
   return (
-    <div>Packetflow</div>
+    <div className={styles.container}>Packetflow</div>
   )
 }
 

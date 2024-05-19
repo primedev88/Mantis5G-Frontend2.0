@@ -1,0 +1,10 @@
+.container{
+    padding: 20px;
+    height: 8vh;
+    min-height: 50px;
+    background-color: #100E14;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

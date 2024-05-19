@@ -3,7 +3,7 @@ import styles from './ue.module.css'
 
 const Ue = () => {
   return (
-    <div>Ue</div>
+    <div className={styles.container}>Ue</div>
   )
 }
 

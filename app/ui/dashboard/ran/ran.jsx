@@ -3,7 +3,7 @@ import styles from './ran.module.css'
 
 const Ran = () => {
   return (
-    <div>Ran</div>
+    <div className={styles.container}>Ran</div>
   )
 }
 
