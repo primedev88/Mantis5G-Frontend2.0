@@ -5,6 +5,8 @@ const Core = () => {
   return (
     <div className={styles.container}>
       Core
+      
+      
     </div>
   )
 }
