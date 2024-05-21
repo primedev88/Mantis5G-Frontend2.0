@@ -53,7 +53,6 @@ const Sidebar = () => {
           height="50"
         />
       </div>
-      <div className={styles.divider}></div>
       <div className={styles.ulList}>
         <ul className={styles.list}>
           {menuItems.map((item) => (
