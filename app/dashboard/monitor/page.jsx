@@ -1,9 +1,10 @@
+import Monitor from '@/app/ui/dashboard/monitor/monitor'
 import React from 'react'
 
-const Monitor = () => {
+const MonitorPage = () => {
   return (
-    <div>Monitor</div>
+    <div><Monitor/></div>
   )
 }
 
-export default Monitor
+export default MonitorPage

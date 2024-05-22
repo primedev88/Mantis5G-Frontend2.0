@@ -1,5 +1,5 @@
 import React from 'react'
-import Logs from '@/app/ui/logs/logs'
+import Logs from '@/app/ui/dashboard/logs/logs'
 
 const LogsPage = () => {
   return (
