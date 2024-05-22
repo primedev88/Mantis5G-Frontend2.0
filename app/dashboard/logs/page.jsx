@@ -1,9 +1,10 @@
 import React from 'react'
+import Logs from '@/app/ui/logs/logs'
 
-const Logs = () => {
+const LogsPage = () => {
   return (
-    <div>Logs</div>
+    <div><Logs/></div>
   )
 }
 
-export default Logs
+export default LogsPage

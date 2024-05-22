@@ -55,8 +55,8 @@ const Sidebar = () => {
       </div>
       <div className={styles.ulList}>
         <ul className={styles.list}>
-          {menuItems.map((item) => (
-            <MenuLink item={item} key={item.title} />
+          {menuItems.map((item,index) => (
+            <li key={index}><MenuLink item={item} key={index} /></li>
           ))}
         </ul>
         <button>

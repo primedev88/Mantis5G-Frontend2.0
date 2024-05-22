@@ -18,6 +18,7 @@
 
 .operation{
     width: 18%;
+    min-width: 200px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -26,6 +27,7 @@
 
 .checks{
     width: 70%;
+    min-width: 150px;
     height: 100%;
     border-radius: 20px;
     border: 1.5px solid rgb(88, 88, 88);
@@ -53,6 +55,8 @@
     align-items: center;
     width: 3vh;
     height: 3vh;
+    min-width: 30px;
+    min-height: 30px;
     background-color: white;
     color: black;
     border-radius: 50%;
@@ -60,7 +64,9 @@
 .ico{
     position: relative;
     height: 5vh;
+    min-height: 30px;
     width: 5vh;
+    min-width: 30px;
     border-radius: 50%;
     background-color: #2A2A2A;
     display: flex;
@@ -72,7 +78,9 @@
     position: relative;
     z-index: 1;
     height: 2.5vh;
+    min-height: 15px;
     width: 2.5vh;   
+    min-width: 15px;
     background:transparent url('../../../../public/Layer2.png') no-repeat;
     background-size: contain;
     border-radius: 50%;
