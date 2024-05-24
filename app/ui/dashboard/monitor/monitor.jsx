@@ -32,18 +32,18 @@ const Monitor = () => {
     const [selectedRntiId, setSelectedRntiId] = useState('');
     const [isInitialSelection, setIsInitialSelection] = useState(true);
     const [Mcs, setMcs] = useState({
-        labels: [], // to store timestamps
+        labels: Array(8).fill(''), // to store timestamps
         datasets: [
             {
                 label: "dl-mcs Values",
-                data: [], // to store RSSI values
+                data: Array(8).fill(0), // to store RSSI values
                 backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "black",
                 borderWidth: 2,
             },
             {
                 label: "dl-mcs Values",
-                data: [], // to store RSSI values
+                data: Array(8).fill(0), // to store RSSI values
                 backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "black",
                 borderWidth: 2,
@@ -52,18 +52,19 @@ const Monitor = () => {
     });
 
     const [Brate, setBrate] = useState({
-        labels: [], // to store timestamps
+         // to store timestamps
+        labels: Array(8).fill('0'),
         datasets: [
             {
                 label: "dl-brate rate",
-                data: [],// to store bitrate values
+                data: Array(8).fill(0),// to store bitrate values
                 backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "black",
                 borderWidth: 4,
             },
             {
                 label: "dl-brate rate",
-                data: [],// to store bitrate values
+                data: Array(8).fill(0),// to store bitrate values
                 backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "black",
                 borderWidth: 4,
@@ -72,11 +73,11 @@ const Monitor = () => {
     });
 
     const [cqidata, setCqidata] = useState({
-        labels: [], // to store timestamps
+        labels: Array(8).fill(''), // to store timestamps
         datasets: [
             {
                 label: "CQI",
-                data: [], // to store bitrate values
+                data: Array(8).fill(0), // to store bitrate values
                 backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "black",
                 borderWidth: 2,
@@ -84,11 +85,11 @@ const Monitor = () => {
         ],
     });
     const [snrdata, setSnrdata] = useState({
-        labels: [], // to store timestamps
+        labels: Array(8).fill(''), // to store timestamps
         datasets: [
             {
                 label: "SNR rate",
-                data: [], // to store bitrate values
+                data: Array(8).fill(0), // to store bitrate values
                 backgroundColor: "rgba(75,192,192,1)",
                 borderColor: "black",
                 borderWidth: 2,
@@ -135,20 +136,9 @@ const Monitor = () => {
                 labels: [...timestamp], // Append new timestamps
                 datasets: [
                     {
-                        label: "dl-mcs Values",
-                        data: [...dlmcsvalue],
-                        backgroundColor: 'rgb(110, 187, 59,0.5)',
-                        borderColor: 'rgb(110, 187, 59)',
-                        borderWidth: 2,
-                        tension: 0.1, // Adjust line tension for a smoother curve
-                        // pointStyle: 'rectRounded',
-                        fill: true,
-                        pointRadius: 0
-                    },
-                    {
                         label: "ul-mcs Values",
                         data: [...ulmcsvalue], // Append new RSSI values
-                        backgroundColor: 'rgb(243, 111, 65,0.5)',
+                        backgroundColor: 'rgb(243, 111, 65)',
                         borderColor: 'rgb(243, 111, 65)',
                         borderWidth: 2,
                         tension: 0.1, // Adjust line tension for a smoother curve
@@ -156,7 +146,19 @@ const Monitor = () => {
                         fill: true,
                         // fill: 'start', 
                         pointRadius: 0
+                    },
+                    {
+                        label: "dl-mcs Values",
+                        data: [...dlmcsvalue],
+                        backgroundColor: 'rgb(110, 187, 59)',
+                        borderColor: 'rgb(110, 187, 59)',
+                        borderWidth: 2,
+                        tension: 0.1, // Adjust line tension for a smoother curve
+                        // pointStyle: 'rectRounded',
+                        fill: true,
+                        pointRadius: 0
                     }
+                    
                 ],
             }));
 
@@ -165,10 +167,10 @@ const Monitor = () => {
                 labels: [...timestamp], // Append new timestamps
                 datasets: [
                     {
-                        label: "dl-brate rate",
-                        data: [...dlbratevalue], // Append new RSSI values
-                        backgroundColor: 'rgb(110, 187, 59,0.5)',
-                        borderColor: 'rgb(110, 187, 59)',
+                        label: "ul-brate rate",
+                        data: [...ulbratevalue], // Append new RSSI values
+                        backgroundColor: 'rgb(243, 111, 65)',
+                        borderColor: 'rgb(243, 111, 65)',
                         borderWidth: 2,
                         tension: 0.1, // Adjust line tension for a smoother curve
                         // pointStyle: 'rectRounded',
@@ -177,10 +179,10 @@ const Monitor = () => {
                         pointRadius: 0
                     },
                     {
-                        label: "ul-brate rate",
-                        data: [...ulbratevalue], // Append new RSSI values
-                        backgroundColor: 'rgb(243, 111, 65,0.5)',
-                        borderColor: 'rgb(243, 111, 65)',
+                        label: "dl-brate rate",
+                        data: [...dlbratevalue], // Append new RSSI values
+                        backgroundColor: 'rgb(110, 187, 59)',
+                        borderColor: 'rgb(110, 187, 59)',
                         borderWidth: 2,
                         tension: 0.1, // Adjust line tension for a smoother curve
                         // pointStyle: 'rectRounded',
@@ -188,6 +190,7 @@ const Monitor = () => {
                         // fill: 'start', 
                         pointRadius: 0
                     }
+                    
                 ],
             }));
 
@@ -197,7 +200,7 @@ const Monitor = () => {
                     {
                         label: "CQI",
                         data: [...cqivalue], // Append new RSSI values
-                        backgroundColor: 'rgb(255, 255, 255,0.5)',
+                        backgroundColor: 'rgb(255, 255, 255)',
                         borderColor: 'white',
                         borderWidth: 2,
                         tension: 0.1, // Adjust line tension for a smoother curve
@@ -215,7 +218,7 @@ const Monitor = () => {
                     {
                         label: "SNR Values",
                         data: [...snrvalue], // Append new RSSI values
-                        backgroundColor: 'rgb(255, 255, 255,0.5)',
+                        backgroundColor: 'rgb(255, 255, 255)',
                         borderColor: 'white',
                         borderWidth: 2,
                         tension: 0.1, // Adjust line tension for a smoother curve

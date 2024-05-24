@@ -7,7 +7,7 @@ import Navbar from '../ui/dashboard/navbar/navbar';
 import withAuth from '../lib/actions';
 
 const Layout = ({children}) => {
-  
+ 
   return (
   <div className={styles.container}>
     <div className={styles.menu}>

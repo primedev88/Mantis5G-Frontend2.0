@@ -4,35 +4,26 @@ import React, { useRef, useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
 
-// Helper function to convert a color to a lighter version
-// const getLighterColor = (color, opacity) => {
-//     let r, g, b;
 
-//     if (color.startsWith('#')) {
-//         const bigint = parseInt(color.slice(1), 16);
-//         r = (bigint >> 16) & 255;
-//         g = (bigint >> 8) & 255;
-//         b = bigint & 255;
-//     } else if (color.startsWith('rgb')) {
-//         [r, g, b] = color.match(/\d+/g).map(Number);
-//     } else {
-//         return color;
-//     }
 
-//     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-// };
+function hexToRgba(color, alpha) {
+    let [r, g, b] = color.match(/\d+/g); // Extract r, g, b values
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 
 const options = {
     scales: {
         x: {
             type: 'category',
             max: 8,
-            maxTicksLimit: 40,
-            suggestedMax: 40,
+            maxTicksLimit:8,
+            suggestedMax:8,
             grid: {
                 display: true,
                 color: 'rgba(255, 255, 255, 0.1)'
             }
+
         },
         y: {
             grid: {
@@ -48,40 +39,43 @@ const options = {
     },
     responsive: true,
     maintainAspectRatio: false,
-    animation: false,
+    animation: {
+        duration: 0, // shorter animation duration for smoother updates
+        easing: 'linear' // linear easing for continuous motion
+    }
 };
 
 const LineChart = ({ chartData }) => {
-    // const chartRef = useRef(null);
+    const chartRef = useRef(null);
 
-    // useEffect(() => {
-    //     if (chartRef.current) {
-    //         const chartInstance = chartRef.current;
-    //         const ctx = chartInstance.ctx;
+    useEffect(() => {
+        if (chartRef.current) {
+            const chartInstance = chartRef.current;
+            const ctx = chartInstance.ctx;
 
-    //         const updatedChartData = {
-    //             ...chartData,
-    //             datasets: chartData.datasets.map(dataset => {
-    //                 const color = dataset.borderColor || 'rgba(75,192,192,1)';
-    //                 const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
-    //                 gradient.addColorStop(0, color);
-    //                 gradient.addColorStop(1, getLighterColor(color, 0.1));
+            const updatedChartData = {
+                ...chartData,
+                datasets: chartData.datasets.map(dataset => {
+                    const color = dataset.backgroundColor || 'rgba(75,192,192,1)';
+                    const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+                    gradient.addColorStop(0, hexToRgba(color, 0.7));
+                    gradient.addColorStop(1, hexToRgba(color, 0.1));
 
-    //                 return {
-    //                     ...dataset,
-    //                     backgroundColor: gradient,
-    //                     borderColor: color,
-    //                 };
-    //             })
-    //         };
+                    return {
+                        ...dataset,
+                        backgroundColor: gradient,
+                        borderColor: color,
+                    };
+                })
+            };
 
-    //         chartInstance.data = updatedChartData;
-    //         chartInstance.update();
-    //     }
-    // }, [chartData]);
+            chartInstance.data = updatedChartData;
+            chartInstance.update();
+        }
+    }, [chartData]);
 
     return (
-        <Line  data={chartData} options={options} />
+        <Line ref={chartRef} data={chartData} options={options} />
     );
 };
 
