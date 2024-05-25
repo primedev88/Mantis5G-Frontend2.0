@@ -1,3 +1,6 @@
+"use client"
+
+import React, { useContext } from 'react';
 import Core from '../ui/dashboard/core/core';
 import styles from '../ui/dashboard/dashboard.module.css'
 import Packetflow from '../ui/dashboard/packetflow/packetflow';
@@ -5,9 +8,10 @@ import Ran from '../ui/dashboard/ran/ran';
 import StatusBar from '../ui/dashboard/statusbar/statusBar';
 import Ue from '../ui/dashboard/ue/ue';
 import { RxCross2 } from "react-icons/rx";
+import { DataContext } from '../context/DataContext';
 
 const Dashboard = () => {
-  
+  const { coreStatus, ranStatus , ueStatus , packetCapture , ip , speed } = useContext(DataContext);
   return (
     <div className={styles.dashboard}>
       <div className={styles.progress}>
@@ -20,16 +24,16 @@ const Dashboard = () => {
       </div>
       <div className={styles.info}>
         <div className={styles.core}>
-          <Core/>
+          <Core coreStatus={coreStatus}/>
         </div>
         <div className={styles.ran}>
-          <Ran/>
+          <Ran ranStatus={ranStatus}/>
         </div>
         <div className={styles.ue}>
-          <Ue/>
+          <Ue ueStatus={ueStatus}/>
         </div>
         <div className={styles.packet}>
-          <Packetflow/>
+          <Packetflow packetCapture={packetCapture}/>
         </div>
       </div>
     </div>

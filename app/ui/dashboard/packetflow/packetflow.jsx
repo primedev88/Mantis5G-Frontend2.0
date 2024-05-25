@@ -8,42 +8,7 @@ import * as XLSX from 'xlsx';
 import { format } from 'date-fns';
 import { _getPacketCapture } from '@/app/api/api';
 
-const useInterval = (callback, delay) => {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
-const Packetflow = () => {
-  const [packetCapture, setPacketCapture] = useState([]);
-  useInterval(() => {
-    _getPacketCapture()
-      .then(data => {
-        console.log("Line 35 ", data)
-        if (Array.isArray(data) && data.length > 0) {
-          setPacketCapture((prevData) => [...prevData, ...data]);
-        } else {
-          console.error('Empty or unexpected response from _getPacketCapture');
-        }
-      })
-      .catch(err => {
-        console.error('Error:', err);
-      });
-  }, 10000)
+const Packetflow = ({packetCapture}) => {
 
   const handleDownload = () => {
     // Convert timestamps to human-readable dates and times

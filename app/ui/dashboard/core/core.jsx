@@ -13,8 +13,9 @@ const CoreComponent = ({ name, status }) => (
   </div>
 );
 
-const Core = () => {
-  const coreStatus = [
+const Core = ({coreStatus}) => {
+  console.log(coreStatus)
+  const coreStatusArray = [
     {
       name: 'UPF',
       status: 'running'
@@ -42,6 +43,22 @@ const Core = () => {
 
   ]
 
+  if (coreStatus && coreStatus.Name && coreStatus.status) {
+    for (let i = 0; i < coreStatusArray.length; i++) {
+      const core = coreStatusArray[i];
+      let found = false;
+      for (let j = 0; j < coreStatus.Name.length; j++) {
+        if (coreStatus.Name[j].toLowerCase() === (core.name + 'd').toLowerCase()) {
+          core.status = coreStatus.status[j].includes('running') ? 'running' : 'inactive';
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        core.status = 'inactive';
+      }
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -62,13 +79,13 @@ const Core = () => {
       </div>
       <div className={styles.body}>
         <div className={styles.row}>
-          {coreStatus.slice(0, 3).map((core, index) => (
+          {coreStatusArray.slice(0, 3).map((core, index) => (
             <CoreComponent key={index} name={core.name} status={core.status} />
           ))}
         </div>
         <div className={styles.img}></div>
         <div className={styles.row}>
-          {coreStatus.slice(3).map((core, index) => (
+          {coreStatusArray.slice(3).map((core, index) => (
             <CoreComponent key={index + 3} name={core.name} status={core.status} />
           ))}
         </div>

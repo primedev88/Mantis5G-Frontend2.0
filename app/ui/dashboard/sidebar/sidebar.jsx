@@ -35,7 +35,12 @@ const menuItems = [
   }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
+  const ranCount = ranStatus?.[1]?.count ?? 0;
+  const ueCount = ueStatus?.count??0;
+  const activeServicesCount = coreStatus?.status?.filter(status => status === "active (running)").length ?? 0;
+  const internetSpeed = parseInt(speed?.Download??0)+ parseInt(speed?.Upload??0) || 150;
+
   const router = useRouter();
 
   const handleLogOut = async () => {
@@ -84,7 +89,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>Device Status</div>
-              <div className={styles.devicestatus}>Running</div>
+              <div className={styles.devicestatus}>{activeServicesCount==5?"Running":"Not Running"}</div>
             </div>
           </div>
           <div className={styles.device}>
@@ -99,7 +104,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>Rans Connected</div>
-              <div className={styles.devicestatus}>1/10</div>
+              <div className={styles.devicestatus}>{ranCount>0?ranCount:"0"}</div>
             </div>
           </div>
           <div className={styles.device}>
@@ -114,7 +119,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>Connected Devices</div>
-              <div className={styles.devicestatus}>3/100</div>
+              <div className={styles.devicestatus}>{ueCount}/100</div>
             </div>
           </div>
           <div className={styles.device}>
@@ -129,7 +134,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>Backend Speed</div>
-              <div className={styles.devicestatus}>150 Mbps</div>
+              <div className={styles.devicestatus}>{internetSpeed} Mbps</div>
             </div>
           </div>
           <div className={styles.device}>
@@ -144,7 +149,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>IP</div>
-              <div className={styles.devicestatus}>192.168.0.1</div>
+              <div className={styles.devicestatus}>{ip}</div>
             </div>
           </div>
       </div>

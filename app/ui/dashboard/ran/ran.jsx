@@ -3,23 +3,15 @@ import styles from './ran.module.css'
 import { PiPowerFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
 
-const Ran = () => {
-  const rans=[
-    {
-      id:"0x1000",
-      status:"Stopped"
-    },
-    {
-      id:"0x1000",
-      status:"Running" 
-    }
-  ]
+const Ran = ({ ranStatus }) => {
+  const ranCount = ranStatus?.[1]?.count ?? 0;
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.left}>
           <div className={styles.heading}>5G Radio Access Network</div>
-          <div className={styles.count}>1</div>
+          <div className={styles.count}>{ranCount}</div>
         </div>
         <div className={styles.right}>
           <div className={styles.box}>
@@ -33,30 +25,28 @@ const Ran = () => {
         </div>
       </div>
       <div className={styles.body}>
-        {
-          rans.map((ran,index)=>(
-            <>
-              <div className={styles.row}>
-                <div className={styles.leftr}>
-                  <div className={styles.num}>
-                    {index+1}
-                  </div>
-                  <div className={styles.hori}></div>
-                  <div className={styles.rtext}>
-                    gNodeB ID :{ran.id}
-                  </div>
+        {ranCount > 0 ? (
+          <>
+            <div className={styles.row}>
+              <div className={styles.leftr}>
+                <div className={styles.num}>
+                  1
                 </div>
-                <div className={styles.rightr}>
-                  <div className={styles.hori}></div>
-                  <div className={styles.ltext} style={ran.status=='Running'? {color:'rgb(12, 197, 12)'}:{color:'red'}}>
-                    {ran.status}
-                  </div>
+                <div className={styles.hori}></div>
+                <div className={styles.rtext}>
+                  gNodeB ID :{ranStatus?.[0]?.ID}
                 </div>
               </div>
-              <div className={styles.divider}></div>
-            </>
-          ))
-        }
+              <div className={styles.rightr}>
+                <div className={styles.hori}></div>
+                <div className={styles.ltext} style={ranCount > 0 ? { color: 'rgb(12, 197, 12)' } : { color: 'red' }}>
+                  Running
+                </div>
+              </div>
+            </div>
+            <div className={styles.divider}></div>
+          </>
+        ) : "No ran running"}
       </div>
       <div className={styles.footer}>
         <div></div>
