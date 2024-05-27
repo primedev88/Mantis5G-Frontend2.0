@@ -2,23 +2,26 @@ import React, { useEffect, useState } from 'react'
 import styles from './ran.module.css'
 import { PiPowerFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
-import { _getRanDeploy,_getRanDeploy1, _getRanStop } from '@/app/api/api';
+import { _getRanDeploy, _getRanDeploy1, _getRanStop } from '@/app/api/api';
 import { toast } from 'react-hot-toast';
 
 
 const Ran = ({ ranStatus }) => {
-  const [ranCount,setRanCount] = useState(0);
-  const [ranActive, setRanActive] = useState(ranStatus[1]?.count>0?true:false);
+  const [ranCount, setRanCount] = useState(0);
+  const [ranActive, setRanActive] = useState(ranStatus[1]?.count > 0 ? true : false);
   const [mimo, setMimo] = useState(false);
   const [siso, setSiso] = useState(true);
   const [loading, setLoading] = useState(false)
 
-  useEffect(()=>{
-    setRanCount(ranStatus[1].count);
-    if(ranStatus && ranStatus[1]?.count>0){      
+  useEffect(() => {
+    setRanCount(ranStatus[1]?.count);
+    if (ranStatus && ranStatus[1]?.count > 0) {
       setRanActive(true)
     }
-  },[ranStatus])
+    else if(ranStatus[1]?.count.length==0){
+      setRanActive(false)
+    }
+  }, [ranStatus])
 
   const handleMimo = () => {
     setMimo(true);
@@ -29,45 +32,68 @@ const Ran = ({ ranStatus }) => {
     setMimo(false);
   }
 
-  const handleButtonClick = async ()=>{
-    if(ranActive){
+  const handleButtonClick = async () => {
+    if (ranActive) {
       try {
         setLoading(true);
         const response = await _getRanStop();
         
+        if(response[0]=='RAN Stopped'){
+          toast.success('Ran stopped successfully!');
+          setRanActive(false);
+        }
+        else{
+          toast.error('Ran still running!');
+        }
+
       } catch (err) {
         toast.error('Ran still running!');
       } finally {
-        setLoading(false);
-        setRanActive(false);
-        toast.success('Ran stopped successfully!');
+        setLoading(false);        
       }
     }
-    else{     
-      if(mimo){
+    else {
+      if (mimo) {
+        
         try {
           setLoading(true);
           const response = await _getRanDeploy1();
           
+          if (response[1].count > 0 && response[0].status!='Unable to create radio session') {
+            setRanActive(true);
+            toast.success('Ran started successfully in Mimo config!');
+          }
+          else {
+            setRanActive(false)
+            toast.error('Ran deployment error in Mimo config!')
+          }
+          
         } catch (err) {
           toast.error(' Ran deployment error in Mimo config!');
+          setRanActive(false);
         } finally {
           setLoading(false);
-          setRanActive(true);
-          toast.success('Ran started successfully in Mimo config!');
         }
       }
-      else if(siso){
+      else if (siso) {
         try {
           setLoading(true);
           const response = await _getRanDeploy();
           
+          if (response[1].count > 0 && response[0].status!='Unable to create radio session') {
+            setRanActive(true);
+            toast.success('Ran started successfully in Siso config!');
+          }
+          else {
+            setRanActive(false)
+            toast.error('Ran deployment error in Siso config!')
+          }
+          
         } catch (err) {
           toast.error(' Ran deployment error in Siso config!');
+          setRanActive(false);
         } finally {
           setLoading(false);
-          setRanActive(true);
-          toast.success('Ran started successfully in Siso config!');
         }
       }
     }
@@ -94,7 +120,7 @@ const Ran = ({ ranStatus }) => {
                   <PiPowerFill style={ranActive ? { color: 'rgb(207, 40, 11)' } : { color: 'rgb(27, 199, 27)' }} />
                 </div>
                 <div className={styles.text}>
-                {ranActive ? "Stop" : "Start"}
+                  {ranActive ? "Stop" : "Start"}
                 </div>
               </div>
             )
