@@ -68,20 +68,22 @@
 
 .phead{
     margin-top: 9px;
-    width: 50%;
+    width: 60%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    
 }
 
 .pdate{
     font-size: 12px;
+    width: 10vw;
 }
 
 .ptext{
     font-size: 13.5px;
     font-weight: 700;
+    margin-left: 2vw;
 }
 
 .pbody{

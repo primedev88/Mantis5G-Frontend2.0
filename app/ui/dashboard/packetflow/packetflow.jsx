@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import styles from './packetflow.module.css'
 import { HiDownload } from "react-icons/hi";
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
-import { format } from 'date-fns';
-import { _getPacketCapture } from '@/app/api/api';
+
 
 const Packetflow = ({packetCapture}) => {
 
@@ -67,10 +66,7 @@ const Packetflow = ({packetCapture}) => {
           }
         </div>)
         }
-
       </div>
-
-
     </div>
   )
 }
