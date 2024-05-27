@@ -38,6 +38,42 @@
     align-items: center;
 }
 
+.mid{
+    width: 20%;
+    height: 5vh;   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 4vh;
+    margin-top: 0.5vh;
+}
+.mimo{
+    height: 68%;
+    width: 40%;
+    background-color: #ee5252;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+.siso{
+    height: 68%;
+    width: 40%;
+    background-color: #50d328;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
 .right{
     height: 5vh;
     width: 20%;
@@ -50,10 +86,25 @@
     align-items: center;
     padding-left: 4vh;
 }
+.load{
+    width: 4vh;
+    height: 4vh;
+    background:url('../../../../public/loader/loader1.gif') no-repeat;
+    background-size: contain;
+    opacity: 1;
+    cursor: default;
+}
 
 .box{
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.box:active{
+    transform: scale(0.95);
 }
 
 .icon{

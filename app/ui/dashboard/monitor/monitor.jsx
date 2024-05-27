@@ -298,11 +298,11 @@ const Monitor = () => {
                                             <div className={styles.mright}>
                                                 <div className={styles.umcs}>
                                                     <HiUpload />
-                                                    {Mcs.datasets[1].data[Mcs.datasets[1].data.length - 1]}
+                                                    {Mcs.datasets[0].data[Mcs.datasets[1].data.length - 1]}
                                                 </div>
                                                 <div className={styles.dmcs}>
                                                     <HiDownload />
-                                                    {Mcs.datasets[0].data[Mcs.datasets[0].data.length - 1]}
+                                                    {Mcs.datasets[1].data[Mcs.datasets[0].data.length - 1]}
                                                 </div>
                                             </div>
                                         </div>
@@ -318,12 +318,12 @@ const Monitor = () => {
                                             <div className={styles.spright}>
                                                 <div className={styles.upload}>
                                                     <div><HiUpload /></div>
-                                                    <div>{Brate.datasets[1].data[Brate.datasets[1].data.length - 1]}</div>
+                                                    <div>{Brate.datasets[0].data[Brate.datasets[1].data.length - 1]}</div>
                                                     <div>Mbps</div>
                                                 </div>
                                                 <div className={styles.download}>
                                                     <div><HiDownload /></div>
-                                                    <div>{Brate.datasets[0].data[Brate.datasets[0].data.length - 1]}</div>
+                                                    <div>{Brate.datasets[1].data[Brate.datasets[0].data.length - 1]}</div>
                                                     <div>Mbps</div>
                                                 </div>
                                             </div>

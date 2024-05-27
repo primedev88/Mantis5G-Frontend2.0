@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './core.module.css'
 import { PiPowerFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
+import { _getDockerUpResponse, _getDockerDownResponse } from '@/app/api/api';
+
+import { toast } from 'react-hot-toast';
 
 
 const getStatusColor = (status) => status === 'running' ? 'rgb(27, 199, 27)' : 'red';
@@ -13,52 +16,92 @@ const CoreComponent = ({ name, status }) => (
   </div>
 );
 
-const Core = ({coreStatus}) => {
-  console.log(coreStatus)
-  const coreStatusArray = [
+const Core = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) => {
+  const [coreActive, setCoreActive] = useState(coreStatus.status[0]?.includes('running') ?? false);
+  const [coreStatusArray, setCoreStatusArray] = useState([
     {
       name: 'UPF',
-      status: 'running'
+      status: 'inactive'
     },
     {
       name: 'UDM',
-      status: 'running'
+      status: 'inactive'
     },
     {
       name: 'AUSF',
-      status: 'running'
+      status: 'inactive'
     },
     {
       name: 'SMF',
-      status: 'running'
+      status: 'inactive'
     },
     {
       name: 'AMF',
-      status: 'running'
+      status: 'inactive'
     },
     {
       name: 'User DB',
-      status: 'running'
+      status: 'inactive'
     },
-
   ]
 
-  if (coreStatus && coreStatus.Name && coreStatus.status) {
-    for (let i = 0; i < coreStatusArray.length; i++) {
-      const core = coreStatusArray[i];
-      let found = false;
-      for (let j = 0; j < coreStatus.Name.length; j++) {
-        if (coreStatus.Name[j].toLowerCase() === (core.name + 'd').toLowerCase()) {
-          core.status = coreStatus.status[j].includes('running') ? 'running' : 'inactive';
-          found = true;
-          break;
+  )
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (coreStatus && coreStatus.Name && coreStatus.status) {
+      let anyCoreRunning = false;
+
+      const updatedCoreStatusArray = coreStatusArray.map(core => {
+        for (let j = 0; j < coreStatus.Name.length; j++) {
+          if (coreStatus.Name[j].toLowerCase() === (core.name + 'd').toLowerCase()) {
+            const isRunning = coreStatus.status[j].includes('running');
+            core.status = isRunning ? 'running' : 'inactive';
+            coreStatusArray[5].status = coreStatus.status[j].includes('running') ? 'running' : 'inactive';
+            if (isRunning) {
+              anyCoreRunning = true;
+            }
+            break;
+          }
         }
-      }
-      if (!found) {
-        core.status = 'inactive';
+        return core;
+      });
+      setCoreActive(anyCoreRunning)
+      setCoreStatusArray(updatedCoreStatusArray);
+
+    }
+  }, [coreStatus]);
+
+  const handleButtonClick = async () => {
+    if (coreActive) {
+      try {
+        setLoading(true);
+        const response = await _getDockerDownResponse();
+        
+      } catch (err) {
+        toast.error('Core still running!');
+      } finally {
+        setLoading(false);
+        setCoreActive(false);
+        toast.success('Core stopped successfully!');
       }
     }
-  }
+    else {
+      try {
+        setLoading(true);
+        const response = await _getDockerUpResponse();
+        
+      } catch (err) {
+        toast.error('Core deployment error!');
+      } finally {
+        setLoading(false);
+        setCoreActive(true);
+        toast.success('Core started successfully!');
+      }
+    }
+
+
+  };
 
   return (
     <div className={styles.container}>
@@ -67,16 +110,22 @@ const Core = ({coreStatus}) => {
           <div className={styles.heading}>5G Core Network</div>
         </div>
         <div className={styles.right}>
-          <div className={styles.box}>
-            <div className={styles.icon}>
-              <PiPowerFill />
-            </div>
-            <div className={styles.text}>
-              Stop
-            </div>
-          </div>
+          {
+            loading ? (
+              <div className={styles.load}></div>
+            ) : (
+              <div className={styles.box} onClick={handleButtonClick}>
+                <div className={styles.icon} >
+                  <PiPowerFill style={coreActive ? { color: 'rgb(207, 40, 11)' } : { color: 'rgb(27, 199, 27)' }} />
+                </div>
+                <div className={styles.text}>
+                  {coreActive ? "Stop" : "Start"}
+                </div>
+              </div>
+            )
+          }
         </div>
-      </div>
+      </div >
       <div className={styles.body}>
         <div className={styles.row}>
           {coreStatusArray.slice(0, 3).map((core, index) => (
@@ -106,7 +155,7 @@ const Core = ({coreStatus}) => {
           <div className={styles.context}>Configure</div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

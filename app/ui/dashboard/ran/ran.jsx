@@ -1,27 +1,105 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './ran.module.css'
 import { PiPowerFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
+import { _getRanDeploy,_getRanDeploy1, _getRanStop } from '@/app/api/api';
+import { toast } from 'react-hot-toast';
+
 
 const Ran = ({ ranStatus }) => {
-  const ranCount = ranStatus?.[1]?.count ?? 0;
+  const [ranCount,setRanCount] = useState(0);
+  const [ranActive, setRanActive] = useState(ranStatus[1]?.count>0?true:false);
+  const [mimo, setMimo] = useState(false);
+  const [siso, setSiso] = useState(true);
+  const [loading, setLoading] = useState(false)
+
+  useEffect(()=>{
+    setRanCount(ranStatus[1].count);
+    if(ranStatus && ranStatus[1]?.count>0){      
+      setRanActive(true)
+    }
+  },[ranStatus])
+
+  const handleMimo = () => {
+    setMimo(true);
+    setSiso(false);
+  }
+  const handleSiso = () => {
+    setSiso(true);
+    setMimo(false);
+  }
+
+  const handleButtonClick = async ()=>{
+    if(ranActive){
+      try {
+        setLoading(true);
+        const response = await _getRanStop();
+        
+      } catch (err) {
+        toast.error('Ran still running!');
+      } finally {
+        setLoading(false);
+        setRanActive(false);
+        toast.success('Ran stopped successfully!');
+      }
+    }
+    else{     
+      if(mimo){
+        try {
+          setLoading(true);
+          const response = await _getRanDeploy1();
+          
+        } catch (err) {
+          toast.error(' Ran deployment error in Mimo config!');
+        } finally {
+          setLoading(false);
+          setRanActive(true);
+          toast.success('Ran started successfully in Mimo config!');
+        }
+      }
+      else if(siso){
+        try {
+          setLoading(true);
+          const response = await _getRanDeploy();
+          
+        } catch (err) {
+          toast.error(' Ran deployment error in Siso config!');
+        } finally {
+          setLoading(false);
+          setRanActive(true);
+          toast.success('Ran started successfully in Siso config!');
+        }
+      }
+    }
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.left}>
           <div className={styles.heading}>5G Radio Access Network</div>
-          <div className={styles.count}>{ranCount}</div>
+          <div className={styles.count}>{ranCount > 0 ? ranCount : "0"}</div>
+        </div>
+        <div className={styles.mid}>
+          <div className={styles.mimo} style={mimo ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleMimo}>Mimo</div>
+          <div className={styles.siso} style={siso ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleSiso}>Siso</div>
         </div>
         <div className={styles.right}>
-          <div className={styles.box}>
-            <div className={styles.icon}>
-              <PiPowerFill />
-            </div>
-            <div className={styles.text}>
-              Start
-            </div>
-          </div>
+          {
+            loading ? (
+              <div className={styles.load}></div>
+            ) : (
+              <div className={styles.box} onClick={handleButtonClick}>
+                <div className={styles.icon}>
+                  <PiPowerFill style={ranActive ? { color: 'rgb(207, 40, 11)' } : { color: 'rgb(27, 199, 27)' }} />
+                </div>
+                <div className={styles.text}>
+                {ranActive ? "Stop" : "Start"}
+                </div>
+              </div>
+            )
+          }
+
         </div>
       </div>
       <div className={styles.body}>

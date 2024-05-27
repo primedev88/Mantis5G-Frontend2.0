@@ -42,10 +42,26 @@
 .box{
     display: flex;
     flex-direction: row;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.box:active{
+    transform: scale(0.95);
+}
+
+.load{
+    width: 4vh;
+    height: 4vh;
+    background:url('../../../../public/loader/loader1.gif') no-repeat;
+    background-size: contain;
+    opacity: 1;
+    cursor: default;
 }
 
 .icon{
-    color: rgb(177, 36, 11);
+    color: rgb(207, 40, 11);
     font-size: 24px;
     display: flex;
     align-items: center;

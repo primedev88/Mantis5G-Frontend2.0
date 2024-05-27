@@ -22,7 +22,7 @@ const useInterval = (callback, delay) => {
 }
 
 export const DataProvider = ({ children }) => {
-    const [coreStatus, setCoreStatus] = useState({});
+    const [coreStatus, setCoreStatus] = useState({ Name: [], status: [] ,since:[],uptime:[]});
     const [ranStatus, setRanStatus] = useState([]);
     const [ueStatus, setUeStatus] = useState({
         count: [],
@@ -33,7 +33,7 @@ export const DataProvider = ({ children }) => {
     const [packetCapture, setPacketCapture] = useState([]);
     const [ip, setIp] = useState('');
     const [speed, setSpeed] = useState(0);
-    console.log(speed)
+   
     //useEffect to initialize all datas as the component mounts
     useEffect(() => {
         _getDockerPSResponse()
@@ -65,8 +65,7 @@ export const DataProvider = ({ children }) => {
                 console.error('Error:', err);
             });
         _getPacketCapture()
-            .then(data => {
-                console.log("Line 35 ", data)
+            .then(data => {                
                 if (Array.isArray(data) && data.length > 0) {
                     setPacketCapture((prevData) => [...prevData, ...data.reverse()]);
                 } else {
@@ -127,11 +126,10 @@ export const DataProvider = ({ children }) => {
     useInterval(() => {
         _getPacketCapture()
             .then(data => {
-                console.log("Line 35 ", data)
                 if (Array.isArray(data) && data.length > 0) {
-                    setPacketCapture((prevData) => [...prevData, ...data.reverse()]);
+                    setPacketCapture([...data.reverse()]);
                 } else {
-                    console.error('Empty or unexpected response from _getPacketCapture');
+                    console.log('Empty or unexpected response from _getPacketCapture');
                 }
             })
             .catch(err => {
