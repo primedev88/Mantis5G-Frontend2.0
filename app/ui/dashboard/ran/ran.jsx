@@ -4,6 +4,8 @@ import { PiPowerFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
 import { _getRanDeploy, _getRanDeploy1, _getRanStop } from '@/app/api/api';
 import { toast } from 'react-hot-toast';
+import { useConfig } from '../../../context/ConfigContext';
+import { useRouter } from 'next/navigation';
 
 
 const Ran = ({ ranStatus }) => {
@@ -13,12 +15,20 @@ const Ran = ({ ranStatus }) => {
   const [siso, setSiso] = useState(true);
   const [loading, setLoading] = useState(false)
 
+  const router = useRouter();
+  const { setSelectedConfig } = useConfig();
+
+  const handleSelectConfig = (config) => {
+    setSelectedConfig(config);
+    router.push('/dashboard/configure');
+  };
+
   useEffect(() => {
     setRanCount(ranStatus[1]?.count);
     if (ranStatus && ranStatus[1]?.count > 0) {
       setRanActive(true)
     }
-    else if(ranStatus[1]?.count.length==0){
+    else {
       setRanActive(false)
     }
   }, [ranStatus])
@@ -107,8 +117,8 @@ const Ran = ({ ranStatus }) => {
           <div className={styles.count}>{ranCount > 0 ? ranCount : "0"}</div>
         </div>
         <div className={styles.mid}>
-          <div className={styles.mimo} style={mimo ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleMimo}>Mimo</div>
-          <div className={styles.siso} style={siso ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleSiso}>Siso</div>
+          <div className={styles.mimo} style={mimo ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleMimo}>MIMO</div>
+          <div className={styles.siso} style={siso ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleSiso}>SISO</div>
         </div>
         <div className={styles.right}>
           {
@@ -125,7 +135,6 @@ const Ran = ({ ranStatus }) => {
               </div>
             )
           }
-
         </div>
       </div>
       <div className={styles.body}>
@@ -154,7 +163,7 @@ const Ran = ({ ranStatus }) => {
       </div>
       <div className={styles.footer}>
         <div></div>
-        <div className={styles.configure}>
+        <div className={styles.configure} onClick={() => handleSelectConfig('ran')}>
           <div className={styles.conicon}><IoMdSettings /></div>
           <div className={styles.context}>Configure</div>
         </div>

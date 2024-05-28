@@ -37,31 +37,34 @@ const Logs = ({ packetCapture }) => {
             </div>
             <div className={styles.bodycontainer}>
                 <div className={styles.body}>
-                    {packetCapture.map((packet, index) => {
-                        // const timestampInSeconds = parseInt(packet.timestamp, 10);
-                        // const date = new Date(timestampInSeconds * 1000);
-                        // const formattedDate = format(date, 'dd-MM-yyyy');
-                        // const formattedTime = format(date, 'HH:mm:ss');
-                        return (
-                            <div key={index}>
-                                <div className={styles.packet}>
-                                    <div className={styles.phead}>
-                                        <div className={styles.pdate}>
-                                            {packet.TimeStamp}
+                    {
+                        packetCapture.length === 0 ? "No Entries found" : (<div>
+                            {packetCapture.map((packet, index) => {
+                                // const timestampInSeconds = parseInt(packet.timestamp, 10);
+                                // const date = new Date(timestampInSeconds * 1000);
+                                // const formattedDate = format(date, 'dd-MM-yyyy');
+                                // const formattedTime = format(date, 'HH:mm:ss');
+                                return (
+                                    <div key={index}>
+                                        <div className={styles.packet}>
+                                            <div className={styles.phead}>
+                                                <div className={styles.pdate}>
+                                                    {packet.TimeStamp}
+                                                </div>
+                                                <div className={styles.ptext}>
+                                                    Protocol: {packet.Protocol}
+                                                </div>
+                                            </div>
+                                            <div className={styles.pbody}>{packet.Message}</div>
                                         </div>
-                                        <div className={styles.ptext}>
-                                            Protocol: {packet.Protocol}
-                                        </div>
+                                        <div className={styles.divider}></div>
                                     </div>
-                                    <div className={styles.pbody}>{packet.Message}</div>
-                                </div>
-                                <div className={styles.divider}></div>
-                            </div>
-                        );
-                    })}
+                                );
+                            })}
+                        </div>)
+                    }
                 </div>
             </div>
-
         </div>
     )
 }

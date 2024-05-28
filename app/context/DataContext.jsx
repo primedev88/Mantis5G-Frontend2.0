@@ -121,7 +121,7 @@ export const DataProvider = ({ children }) => {
             .catch(err => {
                 console.error('Error:', err);
             });
-    }, 60000)
+    }, 30000)
 
     useInterval(() => {
         _getPacketCapture()

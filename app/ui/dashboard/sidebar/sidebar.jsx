@@ -1,3 +1,4 @@
+"use client"
 
 import styles from './sidebar.module.css';
 import {
@@ -11,6 +12,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import MenuLink from './menuLink/menuLink';
+import { useEffect, useState } from 'react';
 
 const menuItems = [
   {
@@ -36,10 +38,20 @@ const menuItems = [
 ]
 
 const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
-  const ranCount = ranStatus?.[1]?.count ?? 0;
-  const ueCount = ueStatus?.count??0;
-  const activeServicesCount = coreStatus?.status?.filter(status => status === "active (running)").length ?? 0;
-  const internetSpeed = parseInt(speed?.Download??0)+ parseInt(speed?.Upload??0) || 150;
+  const [ranCount,setRanCount] = useState(ranStatus?.[1]?.count ?? 0);
+  const [ueCount,setUeCount] = useState(ueStatus?.count??0);
+  const [activeServicesCount,setActiveServices] = useState(coreStatus?.status?.filter(status => status === "active (running)").length ?? 0);
+  const [internetSpeed,setSpeed] = useState(0)
+  const [Ip,setIp] = useState('');
+
+  useEffect(()=>{
+    setRanCount(ranStatus?.[1]?.count ?? 0);
+    setUeCount(ueStatus?.count??0);
+    setActiveServices(coreStatus?.status?.filter(status => status === "active (running)").length ?? 0);
+    setIp(ip);
+    setSpeed(speed?.Download?.includes("Check Internet Connection")?"Internet Connection Error":parseInt(speed?.Download??0)+ parseInt(speed?.Upload??0));
+  },[ranStatus , ueStatus , coreStatus ,ip , speed])
+
 
   const router = useRouter();
 
@@ -134,7 +146,7 @@ const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>Backend Speed</div>
-              <div className={styles.devicestatus}>{internetSpeed} Mbps</div>
+              <div className={styles.devicestatus}>{internetSpeed} {internetSpeed=="Internet Connection Error"?"":"Mbps"}</div>
             </div>
           </div>
           <div className={styles.device}>
@@ -149,7 +161,7 @@ const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>IP</div>
-              <div className={styles.devicestatus}>{ip}</div>
+              <div className={styles.devicestatus}>{Ip}</div>
             </div>
           </div>
       </div>

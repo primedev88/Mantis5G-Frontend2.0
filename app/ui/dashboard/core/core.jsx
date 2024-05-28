@@ -3,8 +3,10 @@ import styles from './core.module.css'
 import { PiPowerFill } from "react-icons/pi";
 import { IoMdSettings } from "react-icons/io";
 import { _getDockerUpResponse, _getDockerDownResponse } from '@/app/api/api';
+import { useConfig } from '../../../context/ConfigContext';
 
 import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 
 const getStatusColor = (status) => status === 'running' ? 'rgb(27, 199, 27)' : 'red';
@@ -48,6 +50,14 @@ const Core = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) 
   )
   const [loading, setLoading] = useState(false)
 
+  const router = useRouter();
+  const { setSelectedConfig } = useConfig();
+
+  const handleSelectConfig = (config) => {
+    setSelectedConfig(config);
+    router.push('/dashboard/configure');
+  };
+
   useEffect(() => {
     if (coreStatus && coreStatus.Name && coreStatus.status) {
       let anyCoreRunning = false;
@@ -77,7 +87,7 @@ const Core = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) 
       try {
         setLoading(true);
         const response = await _getDockerDownResponse();
-        
+
       } catch (err) {
         toast.error('Core still running!');
       } finally {
@@ -90,7 +100,7 @@ const Core = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) 
       try {
         setLoading(true);
         const response = await _getDockerUpResponse();
-        
+
       } catch (err) {
         toast.error('Core deployment error!');
       } finally {
@@ -150,7 +160,7 @@ const Core = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) 
             <div className={styles.ftext}>Inactive</div>
           </div>
         </div>
-        <div className={styles.configure}>
+        <div className={styles.configure} onClick={() => handleSelectConfig('core')}>
           <div className={styles.conicon}><IoMdSettings /></div>
           <div className={styles.context}>Configure</div>
         </div>

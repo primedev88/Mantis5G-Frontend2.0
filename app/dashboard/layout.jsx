@@ -6,26 +6,30 @@ import Sidebar from '../ui/dashboard/sidebar/sidebar';
 import Navbar from '../ui/dashboard/navbar/navbar';
 import withAuth from '../lib/actions';
 import { DataContext, DataProvider } from '../context/DataContext';
+import { ConfigProvider } from '../context/ConfigContext';
 
-const Layout = ({children}) => {
-  const { coreStatus, ranStatus , ueStatus , packetCapture , ip , speed } = useContext(DataContext);
+
+const Layout = ({ children }) => {
+  const { coreStatus, ranStatus, ueStatus, packetCapture, ip, speed } = useContext(DataContext);
   return (
-  <div className={styles.container}>
-    <div className={styles.menu}>
-      <Sidebar ranStatus={ranStatus} ueStatus={ueStatus} coreStatus={coreStatus} ip={ip} speed={speed}/>
-    </div>
-    <div className={styles.content}>
-      <Navbar/>
-      {children}
-    </div>
-  </div>)
+    <div className={styles.container}>
+      <div className={styles.menu}>
+        <Sidebar ranStatus={ranStatus} ueStatus={ueStatus} coreStatus={coreStatus} ip={ip} speed={speed} />
+      </div>
+      <div className={styles.content}>
+        <Navbar ranStatus={ranStatus} ueStatus={ueStatus} coreStatus={coreStatus} speed={speed} />
+        {children}
+      </div>
+    </div>)
 }
 
-const WrappedLayout =  withAuth(Layout);
+const WrappedLayout = withAuth(Layout);
 
-const LayoutWrapper = ({children}) => (
+const LayoutWrapper = ({ children }) => (
   <DataProvider>
-    <WrappedLayout>{children}</WrappedLayout>
+    <ConfigProvider>
+      <WrappedLayout>{children}</WrappedLayout>
+    </ConfigProvider>
   </DataProvider>
 );
 

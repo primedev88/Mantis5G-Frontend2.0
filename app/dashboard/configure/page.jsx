@@ -1,9 +1,10 @@
 import React from 'react'
+import Configure from '@/app/ui/dashboard/configure/configure'
 
-const Configure = () => {
+const ConfigurePage = () => {
   return (
-    <div>Configure</div>
+    <div><Configure/></div>
   )
 }
 
-export default Configure
+export default ConfigurePage

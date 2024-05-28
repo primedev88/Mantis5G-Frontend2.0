@@ -216,7 +216,15 @@
     align-items: center;
     background-color: #2A2A2A;
     border-radius: 13px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
 }
+
+.configure:active{
+    transform: scale(0.8);
+}
+
 
 .conicon{
     display: flex;
