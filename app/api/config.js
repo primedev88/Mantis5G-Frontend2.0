@@ -16,7 +16,9 @@ export const API_CONFIG = {
     GET_COREDEPLOY:'/Core_Deploy',
     GET_NETWORKCAPTURE:"/Network_KPIs",
     GET_CORESTATUS:'/Core_Status',
-    GET_CORESTOP:'/Core_Stop'
-    
+    GET_CORESTOP:'/Core_Stop',
+    POST_CORECONFIGURE:'/Core_Configure',
+    POST_SISOCONFIGURE:'/Siso_Configure',
+    POST_MIMOCONFIGURE:'/Mimo_Configure'
   };
  
