@@ -179,6 +179,7 @@ export const _getNetworkkpi = async () => {
 
 export const _postCoreConfig = async (data) => {
   try {
+    console.log("api line 182 ",data)
     const response = await axios.post(
       API_CONFIG.BASE_URL + API_CONFIG.POST_CORECONFIGURE,
       data,

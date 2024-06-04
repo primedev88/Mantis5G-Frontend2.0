@@ -100,7 +100,7 @@ const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
               />
             </div>
             <div className={styles.status}>
-              <div className={styles.devicetitle}>Device Status</div>
+              <div className={styles.devicetitle}>Core Status</div>
               <div className={styles.devicestatus}>{activeServicesCount==5?"Running":"Not Running"}</div>
             </div>
           </div>
