@@ -64,7 +64,6 @@ const Ran = ({ ranStatus }) => {
     }
     else {
       if (mimo) {
-        
         try {
           setLoading(true);
           const response = await _getRanDeploy1();

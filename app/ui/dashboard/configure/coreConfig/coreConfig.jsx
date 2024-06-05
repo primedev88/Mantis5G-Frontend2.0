@@ -5,7 +5,7 @@ import styles from './coreConfig.module.css'
 import { _getDockerDownResponse, _getDockerUpResponse, _postCoreConfig } from '@/app/api/api';
 import { toast } from 'react-hot-toast';
 import { PiPowerFill } from "react-icons/pi";
- 
+
 const getStatusColor = (status) => status === 'running' ? 'rgb(27, 199, 27)' : 'red';
 
 const CoreComponent = ({ name, status }) => (
@@ -15,7 +15,7 @@ const CoreComponent = ({ name, status }) => (
     </div>
 );
 
-const CoreConfig = ({coreStatus = { Name: [], status: [], since: [], uptime: [] } }) => {
+const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) => {
     const [loading, setLoading] = useState(false)
     const [coreActive, setCoreActive] = useState(coreStatus.status[0]?.includes('running') ?? false);
     const [mcc, setMcc] = useState('');
@@ -78,7 +78,7 @@ const CoreConfig = ({coreStatus = { Name: [], status: [], since: [], uptime: [] 
     useEffect(() => {
         sessionStorage.setItem('tac', tac);
     }, [tac]);
-    
+
     const handleButtonClick = async () => {
         if (coreActive) {
             try {
@@ -161,96 +161,97 @@ const CoreConfig = ({coreStatus = { Name: [], status: [], since: [], uptime: [] 
         }
 
         if (isValid) {
-            if(mcc=="001" && mnc=="01" && tac=="7" && isdefault){
+            if (mcc == "001" && mnc == "01" && tac == "7" && isdefault) {
                 toast.error('Core is already in default config')
             }
-            else if(mcc==oldmcc && mnc==oldmnc && tac==oldtac){
+            else if (mcc == oldmcc && mnc == oldmnc && tac == oldtac) {
                 toast.success('Core is already in this config')
             }
-            else{
+            else {
                 setoldMcc(mcc);
                 setoldMnc(mnc);
                 setoldTac(tac);
-                if(mcc=="001" && mnc=="01" && tac=="7"){
+                if (mcc == "001" && mnc == "01" && tac == "7") {
                     setDefault(true);
                 }
-                else{
+                else {
                     setDefault(false);
                 }
-                
+
                 if (coreActive) {
                     try {
-                        
+
                         const response = await _getDockerDownResponse();
-        
+
                     } catch (err) {
                         toast.error('Core still running!');
                     } finally {
-                        
+
                         setCoreActive(false);
                         toast.success('Core stopped successfully!');
                     }
                 }
                 setLoader(true);
                 const data = { mcc, mnc, tac };
-    
+
                 try {
                     const result = await _postCoreConfig(data);
                     toast.success('Submission successful');
-                   
+
                 } catch (error) {
                     toast.error('Submission failed:');
-                    
+
                 } finally {
                     setLoader(false);
                 }
-            }           
+            }
         }
     };
-    const changeDeafult = async ()=>{
-        setMcc('001');
-        setMnc('01');
-        setTac('7');
-        setoldMcc('001');
-        setoldMnc('01');
-        setoldTac('7');
-        if(mcc=="001" && mnc=="01" && tac=="7" && isdefault){
+    const changeDeafult = async () => {
+
+        if (mcc == "001" && mnc == "01" && tac == "7" && isdefault) {
             toast.error('Core is already in default config')
         }
-        else{
+        else {
+            setMcc('001');
+            setMnc('01');
+            setTac('7');
+            setoldMcc('001');
+            setoldMnc('01');
+            setoldTac('7');
             setDefault(true);
-            
+
             if (coreActive) {
                 try {
-                    
+
                     const response = await _getDockerDownResponse();
-    
+
                 } catch (err) {
                     toast.error('Core still running!');
                 } finally {
-                    
+
                     setCoreActive(false);
                     toast.success('Core stopped successfully!');
                 }
             }
             setLoader1(true);
             const data = {
-                mcc:"001",
-                mnc:"01", 
-                tac:"7"
+                mcc: "001",
+                mnc: "01",
+                tac: "7"
             };
 
             try {
                 const result = await _postCoreConfig(data);
                 toast.success('Submission successful');
-               
+
             } catch (error) {
                 toast.error('Submission failed:');
-                
+
             } finally {
                 setLoader1(false);
             }
-        }           
+        }
     }
 
     const clearForm = () => {
@@ -418,13 +419,13 @@ const CoreConfig = ({coreStatus = { Name: [], status: [], since: [], uptime: [] 
                     </div>
 
                     <div className={styles.buttons}>
-                        <button type='Submit'>{loader?"Loading...":"Save Changes"}</button>
+                        <button type='Submit'>{loader ? "Loading..." : "Save Changes"}</button>
                         <div className={styles.cancel} onClick={clearForm}>Cancel</div>
                     </div>
 
                 </form>
             </div>
-            <div className={styles.default} onClick={changeDeafult}>{loader1?"Loading...":"Change to Default Settings"}</div>
+            <div className={styles.default} onClick={changeDeafult}>{loader1 ? "Loading..." : "Change to Default Settings"}</div>
         </div>
     )
 }
