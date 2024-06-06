@@ -277,7 +277,7 @@ const Monitor = () => {
                             <div className={styles.header}>
                                 <div className={styles.left}>
                                     <div className={styles.icon}></div>
-                                    <div className={styles.ltxt}>{parseInt(selectedRntiId, 10).toString(16).toUpperCase()}'s Analytics</div>
+                                    <div className={styles.ltxt}>{parseInt(selectedRntiId, 10).toString(16).toUpperCase()}&#39;s Analytics</div>
                                 </div>
                                 <div className={styles.right}>
                                     <div className={styles.active}>

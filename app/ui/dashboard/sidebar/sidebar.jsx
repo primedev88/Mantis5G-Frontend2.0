@@ -131,7 +131,7 @@ const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
             </div>
             <div className={styles.status}>
               <div className={styles.devicetitle}>Connected Devices</div>
-              <div className={styles.devicestatus}>{ueCount}/100</div>
+              <div className={styles.devicestatus}>{ueCount>0?ueCount:"0"}/100</div>
             </div>
           </div>
           <div className={styles.device}>

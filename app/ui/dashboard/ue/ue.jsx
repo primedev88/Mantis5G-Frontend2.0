@@ -10,7 +10,7 @@ const Ue = ({ueStatus}) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.heading}>5G UEs Connected</div>
-        <div className={styles.count}>{ueCount}</div>
+        <div className={styles.count}>{ueCount>0?ueCount:"0"}</div>
       </div>
       <div className={styles.body}>
         {ueStatus.rnti.map((rnti, index) => (

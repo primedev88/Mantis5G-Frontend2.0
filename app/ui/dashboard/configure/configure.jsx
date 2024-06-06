@@ -42,7 +42,7 @@ const Configure = ({ ranStatus, coreStatus = { Name: [], status: [], since: [], 
             <div className={`${styles.col3} ${selectedConfig == 'core' ? styles.corecol3 : ''}`}>
                 {
                     selectedConfig == 'core' ? (
-                        <CoreConfig coreStatus={coreStatus}/>
+                        <CoreConfig coreStatus={coreStatus} ranStatus={ranStatus}/>
                     ) : (
                         <RanConfig ranStatus={ranStatus}/>
                     )

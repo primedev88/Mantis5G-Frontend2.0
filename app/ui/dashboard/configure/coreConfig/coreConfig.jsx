@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import styles from './coreConfig.module.css'
-import { _getDockerDownResponse, _getDockerUpResponse, _postCoreConfig } from '@/app/api/api';
+import { _getDockerDownResponse, _getDockerUpResponse, _postCoreConfig, _getRanStop } from '@/app/api/api';
 import { toast } from 'react-hot-toast';
 import { PiPowerFill } from "react-icons/pi";
 
@@ -15,7 +15,7 @@ const CoreComponent = ({ name, status }) => (
     </div>
 );
 
-const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) => {
+const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] }, ranStatus }) => {
     const [loading, setLoading] = useState(false)
     const [coreActive, setCoreActive] = useState(coreStatus.status[0]?.includes('running') ?? false);
     const [mcc, setMcc] = useState('');
@@ -30,6 +30,10 @@ const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: []
     const [loader, setLoader] = useState(false);
     const [loader1, setLoader1] = useState(false);
     const [isdefault, setDefault] = useState(true);
+
+    const [ranCount, setRanCount] = useState(0);
+    const [ranActive, setRanActive] = useState(ranStatus[1]?.count > 0 ? true : false);
+
     const [coreStatusArray, setCoreStatusArray] = useState([
         {
             name: 'UPF',
@@ -80,6 +84,25 @@ const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: []
     }, [tac]);
 
     const handleButtonClick = async () => {
+        if (ranActive) {
+            try {
+                setLoading(true);
+                const response = await _getRanStop();
+
+                if (response[0] == 'RAN Stopped') {
+                    toast.success('Ran stopped successfully!');
+                    setRanActive(false);
+                }
+                else {
+                    toast.error('Ran still running!');
+                }
+
+            } catch (err) {
+                toast.error('Ran still running!');
+            } finally {
+                setLoading(false);
+            }
+        }
         if (coreActive) {
             try {
                 setLoading(true);
@@ -93,6 +116,7 @@ const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: []
                 toast.success('Core stopped successfully!');
             }
         }
+
         else {
             try {
                 setLoading(true);
@@ -106,8 +130,6 @@ const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: []
                 toast.success('Core started successfully!');
             }
         }
-
-
     };
 
     useEffect(() => {
@@ -133,6 +155,16 @@ const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: []
 
         }
     }, [coreStatus]);
+
+    useEffect(() => {
+        setRanCount(ranStatus[1]?.count);
+        if (ranStatus && ranStatus[1]?.count > 0) {
+            setRanActive(true)
+        }
+        else {
+            setRanActive(false)
+        }
+    }, [ranStatus])
 
 
     const handleSubmit = async (e) => {
@@ -220,7 +252,25 @@ const CoreConfig = ({ coreStatus = { Name: [], status: [], since: [], uptime: []
             setoldMnc('01');
             setoldTac('7');
             setDefault(true);
+            if (ranActive) {
+                try {
+                    setLoading(true);
+                    const response = await _getRanStop();
 
+                    if (response[0] == 'RAN Stopped') {
+                        toast.success('Ran stopped successfully!');
+                        setRanActive(false);
+                    }
+                    else {
+                        toast.error('Ran still running!');
+                    }
+
+                } catch (err) {
+                    toast.error('Ran still running!');
+                } finally {
+                    setLoading(false);
+                }
+            }
             if (coreActive) {
                 try {
 
