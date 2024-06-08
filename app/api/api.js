@@ -260,3 +260,66 @@ export const _postMimoConfig = async (data) => {
     throw error; // Re-throw the error after logging it
   }
 };
+
+export const _postAddSubs = async (data) =>{
+  try {
+    const response = await axios.post(
+      API_CONFIG.BASE_URL + API_CONFIG.POST_ADDSUBSCRIBER,
+      data,
+      {
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    throw error; // Re-throw the error after logging it
+  }
+}
+
+export const _postDelSubs = async (data) =>{
+  try {
+    const response = await axios.post(
+      API_CONFIG.BASE_URL + API_CONFIG.POST_DELETESUBSCRIBER,
+      data,
+      {
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    throw error; // Re-throw the error after logging it
+  }
+}
+
+export const _getTotalSubscribers = async () => {
+
+  try {
+    const response = await axios.get(API_CONFIG.BASE_URL + API_CONFIG.GET_SUBSCRIBERS);
+
+    return response.data;
+  }
+  catch (err) { throw err; }
+
+}

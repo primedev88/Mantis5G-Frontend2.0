@@ -9,6 +9,7 @@ import { RiRestartFill } from "react-icons/ri";
 import { IoDocumentText, IoEye } from "react-icons/io5";
 import { VscBroadcast } from "react-icons/vsc";
 import { TbLogout2 } from "react-icons/tb";
+import { FaSimCard } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import MenuLink from './menuLink/menuLink';
@@ -31,10 +32,16 @@ const menuItems = [
     icon: <IoEye />
   },
   {
+    title: "Subscribers",
+    path: "/dashboard/subscriber",
+    icon:<FaSimCard />
+  },
+  {
     title: "Logs",
     path: "/dashboard/logs",
     icon: <IoDocumentText />
   }
+
 ]
 
 const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {

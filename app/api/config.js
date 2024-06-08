@@ -19,6 +19,9 @@ export const API_CONFIG = {
     GET_CORESTOP:'/Core_Stop',
     POST_CORECONFIGURE:'/Core_Configure',
     POST_SISOCONFIGURE:'/Siso_Configure',
-    POST_MIMOCONFIGURE:'/Mimo_Configure'
+    POST_MIMOCONFIGURE:'/Mimo_Configure',
+    POST_ADDSUBSCRIBER:'/Add_Subscriber',
+    POST_DELETESUBSCRIBER:'/Delete_Subscriber',
+    GET_SUBSCRIBERS:'/Get_total_subscribers'
   };
  
