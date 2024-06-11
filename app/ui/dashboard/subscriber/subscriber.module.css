@@ -42,7 +42,16 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
 }
+
+.add:active{
+    transform:scale(0.95)
+}
+
+
 
 .ico{
     display: flex;
@@ -62,6 +71,65 @@
     width: 94%;
     height: 70%;
     border-radius: 22px;
+    padding: 0vh 0vh;
+}
+
+.table{
+    box-sizing: border-box;
+    max-height: 100%;
+    width: 100%;
+   
+    color: white;
+    border-collapse: collapse;
+}
+.rw2 thead{
+    color: #666666;
+    height: 7vh;
+}
+.rw2 td{
+    text-align: center; 
+    vertical-align: middle;
+}
+.rw2 tr{
+    border-bottom: 1px solid #2c2c2c;
+    height: 8vh;
+}
+.rw2 th{
+    border-bottom: 1px solid #707070;
+}
+
+.corner{
+    width: 0.6%;
+}
+
+.check{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #707070;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.check:checked{
+    background-color: #F36F41;
+   
+}
+
+.check:checked::after{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 .rw3{
@@ -88,6 +156,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s;
+}
+
+.del:active{
+    transform: scale(0.95);
 }
 
 .ico2{
@@ -95,4 +170,45 @@
     align-items: center;
     font-size: 1.4em;
     margin-right:10px ;
+}
+.rt3{
+    background-color: #0D0C0E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:5px 10px;
+    border-radius: 14px;
+}
+/* Pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Active page button */
+.pagination .active {
+    background-color: #F36F41;
+    color: white;
+    font-weight: bold;
+}
+
+.num{
+    border: none;
+    background-color: #0D0C0E;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 4px;
+    margin: 1px 10px;
+}
+
+.arrow{
+    border: none;
+    background-color: #0D0C0E;
+    color: white;
+    cursor: pointer;
 }
