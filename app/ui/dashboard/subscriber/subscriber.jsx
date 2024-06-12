@@ -4,27 +4,28 @@ import React, { useEffect, useState } from 'react'
 import styles from './subscriber.module.css'
 import { IoAdd } from "react-icons/io5";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { MdOutlineKeyboardArrowRight ,MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { _getTotalSubscribers,_postAddSubs,_postDelSubs } from '@/app/api/api';
+import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { _getTotalSubscribers, _postAddSubs, _postDelSubs } from '@/app/api/api';
+import { toast } from 'react-hot-toast';
 
 const ITEMS_PER_PAGE = 5;
 
 const Subscriber = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedRows, setSelectedRows] = useState([]);
-    const [data,setData] = useState({ subscribers: [], total_count: 0 })
+    const [data, setData] = useState({ subscribers: [], total_count: 0 })
     const [subscribers, setSubscribers] = useState([]);
-    useEffect(()=>{
+    useEffect(() => {
         _getTotalSubscribers()
             .then(data => {
-                setData(data); 
+                setData(data);
                 setSubscribers(data?.subscribers)
             })
             .catch(err => {
                 console.error('Error:', err);
             });
-    },[])
-    
+    }, [])
+
     const totalPages = Math.ceil(subscribers.length / ITEMS_PER_PAGE);
 
     const handleCheckboxChange = (imsi) => {
@@ -43,19 +44,44 @@ const Subscriber = () => {
     const currentPageData = subscribers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
 
+    const handleDelete = async () => {
+        const selectedIMSI = selectedRows;
 
-    const handleDelete = () => {
-        const newData = data.filter(row => !selectedRows.includes(row.imsi));
+ 
 
-        setSelectedRows([]);
+        try {
+            const response = await _postDelSubs({ imsis: selectedIMSI });
 
-        if (currentPage > Math.ceil(newData.length / ITEMS_PER_PAGE)) {
-            setCurrentPage(currentPage - 1);
+            if (response && response.message) {
+                toast.success(response.message);
+            } else {
+                toast.success("Subscribers deleted successfully");
+            }
+
+            _getTotalSubscribers()
+                .then(data => {
+                    setData(data);
+                    setSubscribers(data?.subscribers);
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                });
+
+            setSelectedRows([]);
+        } catch (error) {
+            if (error && error.message) {
+                toast.error(error.message);
+            } else {
+                toast.error("An error occurred while deleting subscribers");
+            }
         }
     };
 
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
+        date.setHours(date.getHours() + 5); // Add 5 hours
+        date.setMinutes(date.getMinutes() + 30); // Add 30 minutes
         const day = date.getDate();
         const month = date.getMonth() + 1; // Months are zero-indexed in JavaScript
         const year = date.getFullYear();
@@ -71,9 +97,32 @@ const Subscriber = () => {
 
     };
 
-    const handleAdd = ()=>{
-        
-    }
+    const handleAdd = async () => {
+        try {
+
+          const currentIMSIs = subscribers.map(sub => parseInt(sub.imsi.slice(12), 14));
+          let newIMSI = 1;
+          while (currentIMSIs.includes(newIMSI)) {
+            newIMSI += 1;
+          }
+          const imsiPart2=10000000000+newIMSI;
+          const imsiPart1="0010";
+          const newIMSIString = imsiPart1+imsiPart2.toString();
+          console.log(newIMSIString)
+
+          const response = await _postAddSubs({ imsi: newIMSIString });
+
+          toast.success(`Added subscriber with IMSI: ${newIMSIString}`);
+
+          const updatedData = await _getTotalSubscribers();
+          setData(updatedData);
+          setSubscribers(updatedData?.subscribers || []);
+        } catch (error) {
+
+          toast.error("An error occurred while adding the subscriber");
+        }
+      };
+      
     return (
         <div className={styles.container}>
             <div className={styles.rw1}>
@@ -130,7 +179,7 @@ const Subscriber = () => {
             </div>
             <div className={styles.rw3}>
                 <div className={styles.lt3}>
-                    <div className={styles.del}>
+                    <div className={styles.del} style={selectedRows.length > 0 ? { backgroundColor: '#C51E1D' } : { backgroundColor: '#525252' }} onClick={handleDelete}>
                         <div className={styles.ico2}>
                             <RiDeleteBin5Fill />
                         </div>
@@ -146,7 +195,7 @@ const Subscriber = () => {
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
                         >
-                            <MdOutlineKeyboardArrowLeft style={currentPage === 1?{fontSize:'30px', color:'#727273'}:{fontSize:'30px', color:'#ffffff'}}/>
+                            <MdOutlineKeyboardArrowLeft style={currentPage === 1 ? { fontSize: '30px', color: '#727273' } : { fontSize: '30px', color: '#ffffff' }} />
                         </button>
                         {Array.from({ length: totalPages }, (_, index) => (
                             <button
@@ -162,7 +211,7 @@ const Subscriber = () => {
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
                         >
-                            <MdOutlineKeyboardArrowRight style={currentPage === totalPages?{fontSize:'30px', color:'#727273'}:{fontSize:'30px', color:'#ffffff'}}/>
+                            <MdOutlineKeyboardArrowRight style={currentPage === totalPages ? { fontSize: '30px', color: '#727273' } : { fontSize: '30px', color: '#ffffff' }} />
                         </button>
                     </div>
                 </div>
