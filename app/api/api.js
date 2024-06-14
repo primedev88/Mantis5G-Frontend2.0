@@ -323,3 +323,38 @@ export const _getTotalSubscribers = async () => {
   catch (err) { throw err; }
 
 }
+
+export const _postDockerLog = async (data) =>{
+  try {
+    const response = await axios.post(
+      API_CONFIG.BASE_URL + API_CONFIG.POST_DOCKERLOG,
+      data,
+      {
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else if (error.request) {
+      console.error('No response received:', error.request);
+    } else {
+      console.error('Error setting up request:', error.message);
+    }
+    throw error; // Re-throw the error after logging it
+  }
+}
+
+export const _getRestart = async ()=>{
+  try {
+    const response = await axios.get(API_CONFIG.BASE_URL + API_CONFIG.GET_RESTART);
+
+    return response.data;
+  }
+  catch (err) { throw err; }
+}

@@ -22,6 +22,8 @@ export const API_CONFIG = {
     POST_MIMOCONFIGURE:'/Mimo_Configure',
     POST_ADDSUBSCRIBER:'/Add_Subscriber',
     POST_DELETESUBSCRIBER:'/Delete_Subscriber',
-    GET_SUBSCRIBERS:'/Get_total_subscribers'
+    GET_SUBSCRIBERS:'/Get_total_subscribers',
+    POST_DOCKERLOG:'/GetDockerLogs',
+    GET_RESTART:'/SystemRestart'
   };
  

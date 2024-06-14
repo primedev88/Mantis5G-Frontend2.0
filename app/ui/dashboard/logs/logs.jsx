@@ -1,12 +1,14 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './logs.module.css'
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import { HiDownload } from "react-icons/hi";
+import { _postDockerLog } from '@/app/api/api';
+import { toast } from 'react-hot-toast';
 
-const Logs = ({ packetCapture }) => {
+const Logs = ({ packetCapture2 }) => {
 
     const handleDownload = () => {
         const packetsWithFormattedDates = packetCapture.map(packet => {
@@ -25,11 +27,45 @@ const Logs = ({ packetCapture }) => {
         const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
         saveAs(data, 'log.xlsx');
     };
+    const [packetCapture, setpacketCapture] = useState([])
+    const [value, setValue] = useState('AMF');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await _postDockerLog({ container: value });
+                setpacketCapture(response);
+                console.log(response)
+            } catch (error) {
+                toast.error("Error while fetching logs");
+            }
+        };
+
+        fetchData();
+    }, [value]);
+
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.htxt}>Logs</div>
+                <div className={styles.left}>
+                    <div className={styles.htxt}>Logs</div>
+                    <div className={styles.drop}>
+                        <label >
+                            <select value={value} onChange={handleChange}>
+                                <option value="AMF">AMF</option>
+                                <option value="SMF">SMF</option>
+                                <option value="UPF">UPF</option>
+                                <option value="AUSF">AUSF</option>
+                                <option value="NRF">NRF</option>
+                                <option value="UDM">UDM</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
                 <div className={styles.download} onClick={handleDownload}>
                     Download Log
                     <HiDownload />
@@ -49,13 +85,13 @@ const Logs = ({ packetCapture }) => {
                                         <div className={styles.packet}>
                                             <div className={styles.phead}>
                                                 <div className={styles.pdate}>
-                                                    {packet.TimeStamp}
+                                                    {packet.time}
                                                 </div>
                                                 <div className={styles.ptext}>
-                                                    Protocol: {packet.Protocol}
+                                                    {packet.protocol}
                                                 </div>
                                             </div>
-                                            <div className={styles.pbody}>{packet.Message}</div>
+                                            <div className={styles.pbody}>{packet.message}</div>
                                         </div>
                                         <div className={styles.divider}></div>
                                     </div>

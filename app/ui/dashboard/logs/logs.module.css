@@ -16,6 +16,14 @@
     justify-content: space-between;
 }
 
+.left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 15%;
+}
+
 .htxt{
     display: flex;
     align-items: center;
@@ -23,6 +31,60 @@
     font-weight: 600;
     font-size: 22px;
 }
+
+.drop {
+    display: inline-block;
+    position: relative;
+}
+
+.drop label {
+    display: block;
+    position: relative;
+}
+
+.drop select {
+    width: 100px;
+    padding: 10px;
+    border: 1px solid #666666;
+    border-radius: 10px;
+    background-color: #040404;
+    color: #adaaaa;
+    font-size: 1.2em;
+    font-weight: 500;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.drop select:hover {
+    border-color: #cacaca;
+}
+
+.drop select:focus {
+    outline: none;
+}
+
+.drop::after {
+    content: '\25BC'; /* Down arrow */
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 5px);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: #F36F41;
+}
+
+.drop select:hover + ::after {
+    color: #F36F41;
+}
+
+/* Optional: For better cross-browser consistency */
+.drop select::-ms-expand {
+    display: none;
+}
+
 
 .download{
     width: 10%;
@@ -79,7 +141,7 @@
 
 .phead{
     margin-top: 19px;
-    width: 25vw;
+    width: 40vw;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -87,19 +149,22 @@
 }
 
 .pdate{
-    font-size: 13px;
+    font-size: 1em;
     width: 10vw;
+    color: #a5d6ff;
 }
 
 .ptext{
-    font-size: 13.5px;
+    font-size: 1em;
     font-weight: 700;
     margin-left: 5vw;
+    color: #F36F41;
 }
 
 .pbody{
     margin: 9px 0px;
     font-size: 16px;
+    color: #fdf49d;
 }
 
 .divider {

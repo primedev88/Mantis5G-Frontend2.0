@@ -44,7 +44,7 @@ const menuItems = [
 
 ]
 
-const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
+const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed, onRestartClick}) => {
   const [ranCount,setRanCount] = useState(ranStatus?.[1]?.count ?? 0);
   const [ueCount,setUeCount] = useState(ueStatus?.count??0);
   const [activeServicesCount,setActiveServices] = useState(coreStatus?.status?.filter(status => status === "active (running)").length ?? 0);
@@ -83,7 +83,7 @@ const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed}) => {
             <li key={index}><MenuLink item={item} key={index} /></li>
           ))}
         </ul>
-        <button>
+        <button onClick={onRestartClick}>
           <div className={styles.resicon}>
             <RiRestartFill />
           </div>
