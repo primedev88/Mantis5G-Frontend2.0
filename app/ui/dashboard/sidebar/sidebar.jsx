@@ -56,7 +56,7 @@ const Sidebar = ({ranStatus , ueStatus , coreStatus ,ip , speed, onRestartClick}
     setUeCount(ueStatus?.count??0);
     setActiveServices(coreStatus?.status?.filter(status => status === "active (running)").length ?? 0);
     setIp(ip);
-    setSpeed(speed?.Download?.includes("Check Internet Connection")?"Internet Connection Error":parseInt(speed?.Download??0)+ parseInt(speed?.Upload??0));
+    setSpeed(speed?.Download?.includes("Check Internet Connection")?"Internet Connection Error":parseInt(speed?.Download??0));
   },[ranStatus , ueStatus , coreStatus ,ip , speed])
 
 
