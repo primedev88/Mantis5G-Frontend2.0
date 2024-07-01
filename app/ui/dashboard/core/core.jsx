@@ -67,7 +67,7 @@ const Core = ({ coreStatus = { Name: [], status: [], since: [], uptime: [] } }) 
           if (coreStatus.Name[j].toLowerCase() === (core.name + 'd').toLowerCase()) {
             const isRunning = coreStatus.status[j].includes('running');
             core.status = isRunning ? 'running' : 'inactive';
-            coreStatusArray[5].status = coreStatus.status[j].includes('running') ? 'running' : 'inactive';
+            coreStatusArray[5].status = coreStatus.status[j]?.includes('running') ? 'running' : 'inactive';
             if (isRunning) {
               anyCoreRunning = true;
             }
