@@ -14,38 +14,38 @@
     justify-content: space-between;
 }
 .mid{
-    width: 25%;
-    height: 5vh;   
+    width: 20%;
+    height: 4.3vh;   
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-left: 4vh;
     margin-top: 0.5vh;
-    
+    background-color: #2A2A2A;
+    padding:0px 8px;
+    border-radius: 22px;
 }
 .mimo{
     height: 68%;
-    width: 40%;
-    background-color: #ee5252;
+    width: 46%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     user-select: none;
 }
 
 .siso{
     height: 68%;
-    width: 40%;
-    background-color: #50d328;
+    width: 46%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     user-select: none;
 }

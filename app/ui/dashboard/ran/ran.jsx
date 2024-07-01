@@ -116,8 +116,8 @@ const Ran = ({ ranStatus }) => {
           <div className={styles.count}>{ranCount > 0 ? ranCount : "0"}</div>
         </div>
         <div className={styles.mid}>
-          <div className={styles.mimo} style={mimo ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleMimo}>MIMO</div>
-          <div className={styles.siso} style={siso ? { backgroundColor: '#50d328' } : { backgroundColor: '#ee5252' }} onClick={handleSiso}>SISO</div>
+          <div className={styles.mimo} style={mimo ? { backgroundColor: '#F36F41',boxShadow:'0px 1px 3px black' } : { color:'#888' }} onClick={handleMimo}>MIMO</div>
+          <div className={styles.siso} style={siso ? { backgroundColor: '#F36F41',boxShadow:'0px 1px 3px black'} : { color:'#888' }} onClick={handleSiso}>SISO</div>
         </div>
         <div className={styles.right}>
           {

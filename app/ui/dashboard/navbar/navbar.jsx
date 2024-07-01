@@ -10,7 +10,7 @@ const Navbar = ({ ranStatus, ueStatus, coreStatus, speed }) => {
 
   const [update, setUpdate] = useState(false)
   const [checks,setChecks] = useState(1)
-
+  
   useEffect(()=>{
     const updatedChecks =1+
     (coreStatus.status[0]?.includes('running') ? 1 : 0) +
